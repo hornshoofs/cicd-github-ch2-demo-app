@@ -1,0 +1,39 @@
+name: CI/CD pipelines
+
+on:
+  pull_request:
+    branches: 
+      - main
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  release:
+    types:
+      - published
+
+jobs:
+  merge-feature2main:
+    if: ${{ github.event_name == 'pull_request' && contains(github.head_ref, 'feature/') }}
+    uses: hornshoofs/common-actions/.github/workflows/pull-req-feature-pipeline.yaml@main
+    secrets: inherit
+
+#If you want to overwrite default deployments values you can provide your values for each non-prod environment. See commented example below.
+#Property names are always the same rep_count (count of replicas), rep_size (replica size). Possible environment identifiers: _dev, _sit.
+  build-and-deploy:
+    if: ${{ github.event_name == 'push'}}
+    uses: hornshoofs/common-actions/.github/workflows/build-pipeline.yaml@main
+    #with:
+    #  rep_count_sit: 2
+    #  rep_size_sit: 0.2
+    secrets: inherit
+
+#If you want to overwrite default deployments values for production you can provide your values. See commented example below.
+  release-to-prod:
+    if: ${{ github.event_name == 'release'}}
+    uses: hornshoofs/common-actions/.github/workflows/release-pipeline.yaml@main
+    #with:
+      #rep_count_prod: 2
+      #rep_size_prod: 0.2
+    secrets: inherit
