@@ -40,7 +40,7 @@
 						<muleVersion>${app.runtime}</muleVersion>
 						<releaseChannel>${ch2.releaseChannel}</releaseChannel>
 						<javaVersion>${ch2.javaV}</javaVersion>
-						<applicationName>${project.artifactId}-${app.majorVersion}-${mule.env}</applicationName>
+						<applicationName>${project.artifactId}-${mule.env}</applicationName>
 						<target>${private.space.name}</target>
 						<provider>MC</provider>
 						<environment>${environment}</environment>
