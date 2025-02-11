@@ -9,7 +9,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	</http:listener-config>
 	<flow name="cicd-github-ch2-demo-appFlow" doc:id="a8f9b3e1-7055-40e0-9828-b6007f0e10e6" >
 		<http:listener doc:name="Listener" doc:id="f4cef535-e70c-4af8-b4b8-1b1820a18b35" config-ref="HTTP_Listener_config" path="/status" allowedMethods="GET"/>
-		<logger level="INFO" doc:name="Start flow" doc:id="84643053-b120-49d9-a561-c067bd7d99c9" message="Start flow"/>
+		<logger level="INFO" doc:name="Start flow" doc:id="84643053-b120-49d9-a561-c067bd7d99c9" message="Start flow!"/>
 		<flow-ref doc:name="get-api-status-subflow" doc:id="573fa374-59f1-444b-8dbd-11ac2fc38fc7" name="get-api-status-subflow"/>
 		<logger level="INFO" doc:name="End flow" doc:id="cf923c02-5d01-4453-9598-c71dc572c8a9" message="End flow" />
 	</flow>
