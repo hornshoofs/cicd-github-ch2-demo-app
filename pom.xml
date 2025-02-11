@@ -104,12 +104,8 @@
 							<format>console</format>
 							<format>html</format>
 						</formats>
-						<ignoreFlows>
-							<ignoreFlow>global-error-handler</ignoreFlow>
-							<ignoreFlow>common-retry-error-handler</ignoreFlow>
-						</ignoreFlows>
 						<ignoreFiles>
-							<ignoreFile>interface.xml</ignoreFile>
+							<ignoreFile>cicd-github-ch2-demo-app.xml</ignoreFile>
 						</ignoreFiles>
 					</coverage>
 				</configuration>
