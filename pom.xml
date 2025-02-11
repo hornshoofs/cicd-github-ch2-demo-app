@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.mycompany</groupId>
+	<groupId>1a08e353-c78c-427b-af5a-6322d26bdda5</groupId>
 	<artifactId>cicd-github-ch2-demo-app</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>mule-application</packaging>
@@ -15,6 +15,8 @@
 
 		<app.runtime>4.8.0</app.runtime>
 		<mule.maven.plugin.version>4.3.0</mule.maven.plugin.version>
+		<munit.version>3.3.1</munit.version>
+		<anypoint.uri>anypoint.mulesoft.com</anypoint.uri>
 	</properties>
 
 	<build>
@@ -30,7 +32,86 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
+					<cloudhub2Deployment>
+						<connectedAppClientId>${connectedApp.clientId}</connectedAppClientId>
+						<connectedAppClientSecret>${connectedApp.clientSecret}</connectedAppClientSecret>
+						<connectedAppGrantType>client_credentials</connectedAppGrantType>
+						<uri>https://${anypoint.uri}</uri>
+						<muleVersion>${app.runtime}</muleVersion>
+						<releaseChannel>${ch2.releaseChannel}</releaseChannel>
+						<javaVersion>${ch2.javaV}</javaVersion>
+						<applicationName>${project.artifactId}-${app.majorVersion}-${mule.env}</applicationName>
+						<target>${private.space.name}</target>
+						<provider>MC</provider>
+						<environment>${environment}</environment>
+						<replicas>${ch2.replicas}</replicas>
+						<vCores>${ch2.vCores}</vCores>
+						<businessGroupId>${project.groupId}</businessGroupId>
+						<deploymentTimeout>${ch2.timeout}</deploymentTimeout>
+						<secureProperties>
+							<encryption.key>${encryption.key}</encryption.key>
+							<anypoint.platform.client_id>${anypoint.client_id}</anypoint.platform.client_id>
+							<anypoint.platform.client_secret>${anypoint.client_secret}</anypoint.platform.client_secret>
+						</secureProperties>
+						<properties>
+							<mule.env>${mule.env}</mule.env>
+							<anypoint.platform.config.analytics.agent.enabled>true</anypoint.platform.config.analytics.agent.enabled>
+							<anypoint.platform.base_uri>https://${anypoint.uri}</anypoint.platform.base_uri>
+							<anypoint.platform.visualizer.layer>${visualizer.layer}</anypoint.platform.visualizer.layer>
+							<anypoint.platform.visualizer.tags>${visualizer.tags}</anypoint.platform.visualizer.tags>
+						</properties>
+						<deploymentSettings>
+							<http>
+								<inbound>
+									<publicUrl>${ch2.publicUrl}</publicUrl>
+									<lastMileSecurity>${ch2.lastSecurity}</lastMileSecurity>
+									<forwardSslSession>${ch2.forwardSslSession}</forwardSslSession>
+								</inbound>
+							</http>
+							<generateDefaultPublicUrl>${ch2.defaultUrl}</generateDefaultPublicUrl>
+						</deploymentSettings>
+						<integrations>
+							<services>
+								<objectStoreV2>
+									<enabled>true</enabled>
+								</objectStoreV2>
+							</services>
+						</integrations>
+					</cloudhub2Deployment>
 					<classifier>mule-application</classifier>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.mulesoft.munit.tools</groupId>
+				<artifactId>munit-maven-plugin</artifactId>
+				<version>${munit.version}</version>
+				<executions>
+					<execution>
+						<id>test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+							<goal>coverage-report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<coverage>
+						<runCoverage>true</runCoverage>
+						<failBuild>${munit.failBuild}</failBuild>
+						<requiredApplicationCoverage>${munit.appCoverage}</requiredApplicationCoverage>
+						<formats>
+							<format>console</format>
+							<format>html</format>
+						</formats>
+						<ignoreFlows>
+							<ignoreFlow>global-error-handler</ignoreFlow>
+							<ignoreFlow>common-retry-error-handler</ignoreFlow>
+						</ignoreFlows>
+						<ignoreFiles>
+							<ignoreFile>interface.xml</ignoreFile>
+						</ignoreFiles>
+					</coverage>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -54,6 +135,20 @@
 			<artifactId>mule-http-connector</artifactId>
 			<version>1.10.3</version>
 			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.munit</groupId>
+			<artifactId>munit-runner</artifactId>
+			<version>${munit.version}</version>
+			<classifier>mule-plugin</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.munit</groupId>
+			<artifactId>munit-tools</artifactId>
+			<version>${munit.version}</version>
+			<classifier>mule-plugin</classifier>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
