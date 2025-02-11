@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="status-test-suite.xml" />
+	<munit:test name="status-test-suite-get-api-status-subflowTest" doc:id="9feca5a1-1992-4220-bdb4-cf8bee219b1f" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get-api-status-subflow" doc:id="239b0dae-0b6c-40e2-b1d6-b249dc74154d" name="get-api-status-subflow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="b0b794e6-dc51-4604-944d-744d468ac5e6" actual='#[payload - "time"]' expected='#[output application/json&#10;---&#10;{&#10;    "applicationName": "cicd-github-ch2-demo-app",&#10;    "status": "running"&#10;}]'/>
+		</munit:validation>
+	</munit:test>
+
+</mule>
