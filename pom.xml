@@ -18,6 +18,10 @@
 		<munit.version>3.3.1</munit.version>
 		<anypoint.uri>anypoint.mulesoft.com</anypoint.uri>
 	</properties>
+	<scm>
+		<developerConnection>scm:git:https://github.com/hornshoofs/cicd-github-ch2-demo-app.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
 
 	<build>
 		<plugins>
