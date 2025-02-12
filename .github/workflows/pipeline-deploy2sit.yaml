@@ -1,0 +1,10 @@
+name: Trigger Deployment to SIT 
+
+on:
+  workflow_dispatch:
+
+jobs:
+  prepare-release:
+    if: ${{ github.event_name == 'workflow_dispatch' && ((github.ref_name == 'main') || contains(github.ref_name, 'hotfix/')) }}
+    uses: hornshoofs/common-actions/.github/workflows/prepare-release-pipeline.yaml@main
+    secrets: inherit
