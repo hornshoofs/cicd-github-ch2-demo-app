@@ -50,3 +50,4 @@ exchange-docs/
 velocity.log
 exchange_modules/
 .exchange_modules_tmp/
+.vscode/
